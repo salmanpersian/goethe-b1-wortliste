@@ -33,7 +33,7 @@
   /* ---- Tab bar ---- */
   #tabs { position: fixed; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column; background: rgba(28,28,30,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.08); z-index: 100; }
   #tabs-inner { display: flex; width: 100%; }
-  #tabs-spacer { height: env(safe-area-inset-bottom, 34px); min-height: 34px; width: 100%; }
+  #tabs-spacer { height: 34px; width: 100%; background: transparent; }
   .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0 4px; gap: 3px; cursor: pointer; min-height: 56px; }
   .tab svg { width: 24px; height: 24px; }
   .tab span { font-size: 10px; font-weight: 500; }
@@ -41,9 +41,9 @@
   .tab.active { color: var(--accent2); }
 
   /* ---- Pages ---- */
-  #app { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding-bottom: calc(56px + max(env(safe-area-inset-bottom, 0px), 34px)); }
+  #app { flex: 1; overflow: visible; display: flex; flex-direction: column; padding-bottom: 90px; }
 
-  .page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+  .page { display: none; flex: 1; flex-direction: column; overflow: visible; }
   .page.active { display: flex; }
 
   /* ---- Nav header ---- */
