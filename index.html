@@ -31,7 +31,7 @@
   body { height: 100%; min-height: -webkit-fill-available; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, sans-serif; overscroll-behavior: none; display: flex; flex-direction: column; }
 
   /* ---- Tab bar ---- */
-  #tabs { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: rgba(28,28,30,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.08); padding-bottom: max(env(safe-area-inset-bottom), 20px); z-index: 100; }
+  #tabs { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: rgba(28,28,30,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.08); padding-bottom: env(safe-area-inset-bottom); z-index: 100; }
   .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0 4px; gap: 3px; cursor: pointer; min-height: 56px; }
   .tab svg { width: 24px; height: 24px; }
   .tab span { font-size: 10px; font-weight: 500; }
@@ -39,7 +39,11 @@
   .tab.active { color: var(--accent2); }
 
   /* ---- Pages ---- */
-  #app { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding-bottom: calc(56px + max(env(safe-area-inset-bottom), 20px)); }
+  #app { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
+  @media all and (display-mode: standalone) {
+    #tabs { padding-bottom: max(env(safe-area-inset-bottom), 34px); }
+    #app { padding-bottom: calc(56px + max(env(safe-area-inset-bottom), 34px)); }
+  }
   .page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
   .page.active { display: flex; }
 
