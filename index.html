@@ -7,6 +7,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Goethe B1">
 <meta name="theme-color" content="#1c1c1e">
+<script>
+if (window.navigator.standalone) {
+  document.documentElement.style.height = window.screen.height + 'px';
+  document.documentElement.style.overflow = 'hidden';
+}
+</script>
 <title>Goethe B1 Flashcards</title>
 <style>
   :root {
