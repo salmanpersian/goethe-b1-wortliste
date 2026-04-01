@@ -27,11 +27,13 @@
     --safe-bottom: env(safe-area-inset-bottom);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { height: 100%; }
-  body { height: 100%; min-height: -webkit-fill-available; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, sans-serif; overscroll-behavior: none; display: flex; flex-direction: column; }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, sans-serif; overscroll-behavior: none; }
+  body { display: flex; flex-direction: column; min-height: 100vh; min-height: -webkit-fill-available; }
 
   /* ---- Tab bar ---- */
-  #tabs { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: rgba(28,28,30,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.08); padding-bottom: 34px; z-index: 100; }
+  #tabs { position: fixed; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column; background: rgba(28,28,30,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.08); z-index: 100; }
+  #tabs-inner { display: flex; width: 100%; }
+  #tabs-spacer { height: env(safe-area-inset-bottom, 34px); min-height: 34px; width: 100%; }
   .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0 4px; gap: 3px; cursor: pointer; min-height: 56px; }
   .tab svg { width: 24px; height: 24px; }
   .tab span { font-size: 10px; font-weight: 500; }
@@ -39,7 +41,7 @@
   .tab.active { color: var(--accent2); }
 
   /* ---- Pages ---- */
-  #app { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding-bottom: 90px; }
+  #app { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding-bottom: calc(56px + max(env(safe-area-inset-bottom, 0px), 34px)); }
 
   .page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
   .page.active { display: flex; }
@@ -374,6 +376,7 @@
 
 <!-- TAB BAR -->
 <div id="tabs">
+  <div id="tabs-inner">
   <div class="tab active" id="tab-study" onclick="showPage('study')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
     <span>Lernen</span>
@@ -386,6 +389,8 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
     <span>Fortschritt</span>
   </div>
+  </div>
+  <div id="tabs-spacer"></div>
 </div>
 
 <script>
