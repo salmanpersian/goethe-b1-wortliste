@@ -476,6 +476,8 @@ function updateStudyHome() {
   document.getElementById('sh-unknown').textContent = countByStatus('unknown');
   document.getElementById('sh-learning').textContent = countByStatus('learning');
   document.getElementById('sh-known').textContent = countByStatus('known');
+  const homePct = CARDS.length > 0 ? (countByStatus('known') / CARDS.length) * 100 : 0;
+  document.getElementById('progress-fill').style.width = homePct + '%';
   buildFilterChips();
   updateCardCountLabel();
 }
@@ -547,8 +549,8 @@ function showCard() {
   wrapper.style.opacity = '1';
 
   // Progress
-  const pct = sessionCards.length > 0 ? (sessionIdx / sessionCards.length) * 100 : 0;
-  document.getElementById('progress-fill').style.width = pct + '%';
+  const overallPct = CARDS.length > 0 ? (countByStatus('known') / CARDS.length) * 100 : 0;
+  document.getElementById('progress-fill').style.width = overallPct + '%';
   document.getElementById('session-counter').textContent = (sessionIdx + 1) + ' / ' + sessionCards.length;
 
   // Show/hide buttons
@@ -604,7 +606,8 @@ function showComplete() {
 
   document.getElementById('study-session').style.display = 'none';
   document.getElementById('session-complete').style.display = 'flex';
-  document.getElementById('progress-fill').style.width = '100%';
+  const completePct = CARDS.length > 0 ? (countByStatus('known') / CARDS.length) * 100 : 0;
+  document.getElementById('progress-fill').style.width = completePct + '%';
 }
 
 // --- Touch/Swipe on card ---
