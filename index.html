@@ -231,10 +231,7 @@ if (window.navigator.standalone) {
 
     <!-- Session screen -->
     <div id="study-session" style="display:none; flex-direction:column;">
-      <div style="display:flex; justify-content:space-between; align-items:center; padding: calc(var(--safe-top) + 8px) 20px 0;">
-        <button onclick="endSession()" style="background:none;border:none;color:var(--text2);font-size:15px;cursor:pointer;padding:8px 0;">Beenden</button>
-        <span id="session-counter" style="font-size:13px;color:var(--text3);"></span>
-      </div>
+
       <div class="progress-wrap">
         <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
       </div>
@@ -458,13 +455,13 @@ function selectFilter(id) {
 
 function getCardsForFilter(type) {
   switch(type) {
-    case 'all': return CARDS;
+    case 'all': return CARDS.filter(c => getStatus(c.id) === 'unknown');
     case 'unknown': return CARDS.filter(c => getStatus(c.id) === 'unknown');
     case 'learning': return CARDS.filter(c => getStatus(c.id) === 'learning');
     case 'known': return CARDS.filter(c => getStatus(c.id) === 'known');
-    case 'noun': return CARDS.filter(c => c.type === 'noun');
-    case 'verb': return CARDS.filter(c => c.type === 'verb' || c.type === 'reflexive verb');
-    case 'other': return CARDS.filter(c => c.type === 'other');
+    case 'noun': return CARDS.filter(c => c.type === 'noun' && getStatus(c.id) === 'unknown');
+    case 'verb': return CARDS.filter(c => (c.type === 'verb' || c.type === 'reflexive verb') && getStatus(c.id) === 'unknown');
+    case 'other': return CARDS.filter(c => c.type === 'other' && getStatus(c.id) === 'unknown');
     default: return CARDS;
   }
 }
@@ -536,9 +533,12 @@ function showCard() {
   document.getElementById('cb-word').textContent = card.word;
   document.getElementById('cb-translation').textContent = card.translation || '';
 
-  // Reset card
+  // Reset card — disable transition to prevent flash of back side
   const fc = document.getElementById('flashcard');
+  fc.style.transition = 'none';
   fc.classList.remove('flipped');
+  fc.getBoundingClientRect(); // force reflow
+  fc.style.transition = '';
 
   // Reset wrapper
   const wrapper = document.getElementById('card-wrapper');
